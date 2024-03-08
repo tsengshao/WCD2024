@@ -30,7 +30,6 @@ rho = vvmLoader.loadRHO()[:-1]
 pibar = vvmLoader.loadPIBAR()[:-1]
 
 nt = (glob.glob((f"{config.vvmPath}/{exp}/archive/*L.Thermodynamic*.nc")))
-sssssssssssssf
 # mpi for time
 idxTS, idxTE = tools.get_mpi_time_span(0, nt, cpuid, nproc)
 print(cpuid, idxTS, idxTE, idxTE-idxTS)
