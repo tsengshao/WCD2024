@@ -2,3 +2,6 @@ __pycache__
 *.nc
 *.out
 *.dat
+*.png
+raw
+data
