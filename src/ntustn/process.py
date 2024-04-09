@@ -25,8 +25,8 @@ def getcolumn(datype):
           6:'T',\
           7:'Td',\
           8:'RH',\
-          9:'e',\
-          10:'es',\
+          9:'es',\
+          10:'e',\
           11:'WD_10min',\
           12:'WS_10min',\
           15:'rain_min',\
@@ -53,7 +53,7 @@ def readdata(fname, datype):
   return output
 
 if __name__=='__main__':
-  datestr = '20240331'
+  datestr = '20240401'
   datype  = 'MN'
   fname = f'../../raw/NTUstn/{datestr}.txt'
   data = readdata(fname, datype)
