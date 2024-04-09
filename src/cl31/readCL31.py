@@ -118,11 +118,11 @@ def mergedata(flist):
         
 
 if __name__=='__main__':
-    fdir='/data/C.shaoyu/wcd2024/raw/'
-    fdirout = '/data/C.shaoyu/wcd2024/data/cl31/'
+    fdir='/data2/C.shaoyu/WCD2024/raw/'
+    fdirout = '/data2/C.shaoyu/WCD2024/data/cl31/'
     os.system('mkdir -p '+fdirout)
     dirlist = ['CLwcd', 'CLhydro']
-    sdate = datetime(2024,4,1)
+    sdate = datetime(2024,3,31)
     edate = datetime(2024,4,1)
     nday  = int((edate-sdate).total_seconds()//86400+1)
     for idir in [0, 1]: 
