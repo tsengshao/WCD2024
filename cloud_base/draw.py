@@ -44,14 +44,15 @@ def plotData(tlist, hei, data, status, cbase, clname):
   cbr = plt.colorbar(CS)
   cbr.set_label('Ceilometer Backscatter Coefficient\n[10$^{-6}$ srad$^{-1}$ km$^{-1}$]', fontsize = 12)
 
-  plt.scatter(tlist, cbase[:,0], s=0.3, fc='#FA8300', ec='none')
-  plt.scatter(tlist, cbase[:,1], s=0.3, fc='#FA8300', ec='none')
-  plt.scatter(tlist, cbase[:,2], s=0.3, fc='#FA8300', ec='none')
-
   idx = np.where(status==4)[0]
   if (len(idx)>0):
     plt.scatter(tlist[idx], np.ones(len(idx))*hei[5],\
                 marker='X', s=3, fc='r', ec='none')
+    cbase[idx,:] = np.nan
+
+  plt.scatter(tlist, cbase[:,0], s=0.3, fc='#FA8300', ec='none')
+  plt.scatter(tlist, cbase[:,1], s=0.3, fc='#FA8300', ec='none')
+  plt.scatter(tlist, cbase[:,2], s=0.3, fc='#FA8300', ec='none')
 
   plt.title(clname, weight = 'heavy', fontsize = 20, loc = 'left')
   plt.title(date, loc = 'right', fontsize = 15)
@@ -100,7 +101,8 @@ def calculate_cloud_base(Ti, Pi, ei):
   return Tc, lcl_hei, lcl_pres
 
 if __name__=='__main__':
-  yyyymmdd = '20240331'
+  yyyymmdd = '20240401'
+  print(yyyymmdd)
   data_path = '/data2/C.shaoyu/WCD2024/data/'
 
   clname='CLwcd'
