@@ -185,7 +185,21 @@ def readParNTU(fname):
 def combineParNTU(yyyymmdd):
   ParID = '000PA3'
   fdir = '/data2/C.shaoyu/WCD2024/raw/ParsivelNTU/'
-  flist = glob.glob(fdir + f'{yyyymmdd}/{ParID}-NTU_{yyyymmdd}_*.txt')
+  nowdate = datetime.strptime(yyyymmdd, '%Y%m%d')
+  mindate = nowdate-timedelta(hours=8, minutes=3)
+  maxdate = nowdate+timedelta(days=1, minutes=3)-timedelta(hours=8)
+
+  minstr = mindate.strftime('%Y%m%d_%H%M%S').split('_')
+  maxstr = maxdate.strftime('%Y%m%d_%H%M%S').split('_')
+  minstrl = fdir + f'{minstr[0]}/{ParID}-NTU_{minstr[0]}_{minstr[1]}.txt'
+  maxstrl = fdir + f'{maxstr[0]}/{ParID}-NTU_{maxstr[0]}_{maxstr[1]}.txt'
+
+  flist = glob.glob(fdir + f'{minstr[0]}/{ParID}-NTU_{minstr[0]}_*.txt')
+  flist += glob.glob(fdir + f'{maxstr[0]}/{ParID}-NTU_{maxstr[0]}_*.txt')
+  flist = np.array(flist)
+
+  idx = (flist<maxstrl)*(flist>minstrl)
+  flist = flist[idx]
 
   pool = Pool()
   results = pool.map(readParNTU, flist)
@@ -194,6 +208,7 @@ def combineParNTU(yyyymmdd):
 
   df = pd.concat(results, ignore_index=True, axis=0)
   df = mergeDateTime(df)
+  df['datetime'] += timedelta(hours=8)
   df = df.sort_values('datetime')
   return df
 
@@ -276,6 +291,7 @@ def toNC(ofname, df):
    return
 if __name__=='__main__':
   yyyymmdd = '20240328'
+  yyyymmdd = '20240402'
   ofdir = '/data2/C.shaoyu/WCD2024/data/parsivel'
 
   cwcd = combineParWCD(yyyymmdd)
